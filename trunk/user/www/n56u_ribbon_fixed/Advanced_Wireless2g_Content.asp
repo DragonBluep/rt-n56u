@@ -393,11 +393,11 @@ function validate_wlphrase(s, v, obj){
                                             <td>
                                                 <select name="rt_gmode" class="input" onChange="return change_common_rt(this, 'WLANConfig11b', 'rt_gmode')">
                                                     <option value="6" <% nvram_match_x("","rt_gmode", "6","selected"); %>>b/g/n/ax Mixed</option>
+                                                    <option value="5" <% nvram_match_x("","rt_gmode", "5","selected"); %>>g/n Mixed (*)</option>
+                                                    <option value="4" <% nvram_match_x("","rt_gmode", "4","selected"); %>>g Only</option>
+                                                    <option value="3" <% nvram_match_x("","rt_gmode", "3","selected"); %>>n Only</option>
                                                     <option value="2" <% nvram_match_x("","rt_gmode", "2","selected"); %>>b/g/n Mixed</option>
                                                     <option value="1" <% nvram_match_x("","rt_gmode", "1","selected"); %>>b/g Mixed</option>
-                                                    <option value="5" <% nvram_match_x("","rt_gmode", "5","selected"); %>>g/n Mixed (*)</option>
-                                                    <option value="3" <% nvram_match_x("","rt_gmode", "3","selected"); %>>n Only</option>
-                                                    <option value="4" <% nvram_match_x("","rt_gmode", "4","selected"); %>>g Only</option>
                                                     <option value="0" <% nvram_match_x("","rt_gmode", "0","selected"); %>>b Only</option>
                                                 </select>
                                                 <span id="rt_gmode_hint" style="display:none;color:#F75"><#WLANConfig11n_automode_limition_hint#></span>
@@ -566,14 +566,14 @@ function validate_wlphrase(s, v, obj){
                                             <th><#WIFIRegionCode#></th>
                                             <td>
                                                 <select name="rt_country_code" class="input" onChange="return change_common_rt(this, 'WLANConfig11b', 'rt_country_code')">
-                                                    <option value="US" <% nvram_match_x("", "rt_country_code", "US","selected"); %>>USA (channels 1-11)</option>
-                                                    <option value="TW" <% nvram_match_x("", "rt_country_code", "TW","selected"); %>>Taiwan (channels 1-11)</option>
-                                                    <option value="CN" <% nvram_match_x("", "rt_country_code", "CN","selected"); %>>China (channels 1-13)</option>
-                                                    <option value="JP" <% nvram_match_x("", "rt_country_code", "JP","selected"); %>>Japan (channels 1-13)</option>
                                                     <option value="AU" <% nvram_match_x("", "rt_country_code", "AU","selected"); %>>Australia (channels 1-13)</option>
-                                                    <option value="GB" <% nvram_match_x("", "rt_country_code", "GB","selected"); %>>Europe (channels 1-13)</option>
-                                                    <option value="RU" <% nvram_match_x("", "rt_country_code", "RU","selected"); %>>Russia (channels 1-13)</option>
+                                                    <option value="CN" <% nvram_match_x("", "rt_country_code", "CN","selected"); %>>China (channels 1-13)</option>
                                                     <option value="DB" <% nvram_match_x("", "rt_country_code", "DB","selected"); %>>Debug (all channels)</option>
+                                                    <option value="GB" <% nvram_match_x("", "rt_country_code", "GB","selected"); %>>Europe (channels 1-13)</option>
+                                                    <option value="JP" <% nvram_match_x("", "rt_country_code", "JP","selected"); %>>Japan (channels 1-13)</option>
+                                                    <option value="RU" <% nvram_match_x("", "rt_country_code", "RU","selected"); %>>Russia (channels 1-13)</option>
+                                                    <option value="TW" <% nvram_match_x("", "rt_country_code", "TW","selected"); %>>Taiwan (channels 1-11)</option>
+                                                    <option value="US" <% nvram_match_x("", "rt_country_code", "US","selected"); %>>USA (channels 1-11)</option>
                                                 </select>
                                             </td>
                                         </tr>

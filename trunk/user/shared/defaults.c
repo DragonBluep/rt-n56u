@@ -176,7 +176,7 @@ struct nvram_pair router_defaults[] = {
 	{ "wl_maclist", "" },			/* xx:xx:xx:xx:xx:xx ... */
 	{ "wl_wme", "1" },			/* WME mode (off|on) */
 	{ "wl_wme_no_ack", "off" },		/* WME No-Acknowledgment mode */
-	{ "wl_auth_mode", "psk" },		/* Network authentication mode: WPAx Personal */
+	{ "wl_auth_mode", "open" },		/* Network authentication mode: WPAx Personal */
 	{ "wl_key", "1" },			/* Current WEP key */
 	{ "wl_key1", "" },			/* 5/13 char ASCII or 10/26 char hex */
 	{ "wl_key2", "" },			/* 5/13 char ASCII or 10/26 char hex */
@@ -195,7 +195,7 @@ struct nvram_pair router_defaults[] = {
 	{ "wl_TxPower", "100" },
 	{ "wl_TxBurst", "1" },
 	{ "wl_PktAggregate", "1" },
-	{ "wl_APSDCapable", "0" },
+	{ "wl_APSDCapable", "1" },
 	{ "wl_HT_OpMode", "0" },
 #if BOARD_HAS_5G_11AC
 	{ "wl_HT_BW", "2" },
@@ -292,8 +292,8 @@ struct nvram_pair router_defaults[] = {
 	{ "rt_TxPower", "100" },
 	{ "rt_TxBurst", "1" },
 	{ "rt_PktAggregate", "1" },
-	{ "rt_APSDCapable", "0" },
-	{ "rt_auth_mode", "psk" },
+	{ "rt_APSDCapable", "1" },
+	{ "rt_auth_mode", "open" },
 	{ "rt_crypto", "aes" },
 	{ "rt_wpa_psk", DEF_WLAN_2G_PSK },
 	{ "rt_wpa_gtk_rekey", "3600" },
@@ -662,7 +662,7 @@ struct nvram_pair router_defaults[] = {
 #endif
 	{ "rstats_enable", "1" },
 	{ "rstats_stored", "1" },
-	{ "stime_stored", "1" },
+	{ "stime_stored", "0" },
 
 	{ "http_id", "TIDe855a6487043d70a" },
 	{ "controlrate_unknown_unicast", "0" },
@@ -678,17 +678,11 @@ struct nvram_pair router_defaults[] = {
 	{ "di_lost_action", "0" },
 	{ "di_recon_pause", "0" },
 	{ "di_addr0", "114.114.114.114" },
-	{ "di_addr1", "208.67.222.222" },
-	{ "di_addr2", "14.17.42.40" },
-	{ "di_addr3", "8.8.8.8" },
-	{ "di_addr4", "8.8.4.4" },
-	{ "di_addr5", "208.67.220.220" },
+	{ "di_addr1", "8.8.8.8" },
+	{ "di_addr2", "8.8.4.4" },
 	{ "di_port0", "53" },
 	{ "di_port1", "53" },
-	{ "di_port2", "80" },
-	{ "di_port3", "53" },
-	{ "di_port4", "53" },
-	{ "di_port5", "53" },
+	{ "di_port2", "53" },
 
 	{ "fw_pt_pppoe", "0" },
 
