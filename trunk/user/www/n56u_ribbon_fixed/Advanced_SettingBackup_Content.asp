@@ -417,8 +417,8 @@ $j.fn.fileName = function() {
                                             <th><#Adm_Setting_store_stime#></th>
                                             <td align="left">
                                                 <select class="input" name="stime_stored_fake" onchange="applyRule();" >
-                                                    <option value="1" <% nvram_match_x("", "stime_stored", "1", "selected"); %>><#checkbox_Yes#> (*)</option>
-                                                    <option value="0" <% nvram_match_x("", "stime_stored", "0", "selected"); %>><#checkbox_No#></option>
+                                                    <option value="1" <% nvram_match_x("", "stime_stored", "1", "selected"); %>><#checkbox_Yes#></option>
+                                                    <option value="0" <% nvram_match_x("", "stime_stored", "0", "selected"); %>><#checkbox_No#> (*)</option>
                                                 </select>
                                             </td>
                                         </tr>
