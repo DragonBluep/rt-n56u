@@ -25,3 +25,7 @@ stamp-h1
 /images/*
 /stage
 /stage/*
+/libs
+/linux-3.4.x
+/tools
+/user
