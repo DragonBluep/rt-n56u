@@ -1561,6 +1561,9 @@ int __init ralink_gpio_init(void)
 #if defined(CONFIG_RALINK_GPIOMODE_PA_G) && defined(RALINK_GPIOMODE_PA_G)
 	gpiomode |= RALINK_GPIOMODE_PA_G;
 #endif
+#if defined(CONFIG_RALINK_GPIOMODE_ANTSEL)
+	gpiomode |= 0x30000c0;
+#endif
 	*(volatile u32 *)(RALINK_REG_GPIOMODE) = cpu_to_le32(gpiomode);
 
 #ifdef CONFIG_RALINK_GPIO_IRQ
