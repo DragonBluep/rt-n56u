@@ -239,7 +239,7 @@ if [ "$CONFIG_PRODUCT" = "MT7621" ] ; then
 	fi
 fi
 ############################# CPU #####################################
-if [ "$CONFIG_FIRMWARE_CPU_SLEEP" = "y" -o "$CONFIG_RALINK_SYSTICK_COUNTER" = "y" ] ; then
+if [ "$CONFIG_FIRMWARE_CPU_SLEEP" = "y" ] ; then
 	func_enable_kernel_param "CONFIG_RALINK_SYSTICK_COUNTER"
 	func_enable_kernel_param "CONFIG_RALINK_CPUSLEEP"
 	func_enable_kernel_param "CONFIG_HZ_1000"
@@ -287,12 +287,8 @@ if [ "$CONFIG_FIRMWARE_ENABLE_IPV6" != "y" ] ; then
 	func_enable_busybox_param "CONFIG_FEATURE_IP_LINK"
 	func_enable_busybox_param "CONFIG_FEATURE_IP_ROUTE"
 fi
-#SFE
-if [ "$CONFIG_FIRMWARE_INCLUDE_SFE" = "y" ] ; then
-	func_enable_kernel_param "CONFIG_SHORTCUT_FE"
-	func_enable_kernel_param "CONFIG_NF_CONNTRACK_EVENTS"
-	func_enable_kernel_param "CONFIG_NF_CONNTRACK_CHAIN_EVENTS"
-else
+############################# SFE #####################################
+if [ "$CONFIG_FIRMWARE_INCLUDE_SFE" != "y" ] ; then
 	func_disable_kernel_param "CONFIG_SHORTCUT_FE"
 	func_disable_kernel_param "CONFIG_NF_CONNTRACK_EVENTS"
 	func_disable_kernel_param "CONFIG_NF_CONNTRACK_CHAIN_EVENTS"
@@ -362,13 +358,13 @@ if [ "$CONFIG_FIRMWARE_ENABLE_SWAP" != "y" ] ; then
 	func_disable_busybox_param "CONFIG_SWAPONOFF"
 fi
 ############################# NFSD ####################################
-# if [ "$CONFIG_FIRMWARE_INCLUDE_NFSD" != "y" ] ; then
-#	func_disable_kernel_param "CONFIG_NFSD"
-# fi
+if [ "$CONFIG_FIRMWARE_INCLUDE_NFSD" != "y" ] ; then
+	func_disable_kernel_param "CONFIG_NFSD"
+fi
 ############################# UVC #####################################
-#if [ "$CONFIG_FIRMWARE_INCLUDE_UVC" != "y" ] ; then
-#	func_disable_kernel_param "CONFIG_MEDIA_SUPPORT"
-#fi
+if [ "$CONFIG_FIRMWARE_INCLUDE_UVC" != "y" ] ; then
+	func_disable_kernel_param "CONFIG_MEDIA_SUPPORT"
+fi
 ############################# HID #####################################
 if [ "$CONFIG_FIRMWARE_INCLUDE_HID" != "y" ] ; then
 	func_disable_kernel_param "CONFIG_INPUT"
@@ -385,7 +381,6 @@ fi
 if [ "$CONFIG_FIRMWARE_INCLUDE_SSWAN" = "y" ] ; then
 	CONFIG_FIRMWARE_INCLUDE_XFRM=y
 fi
-if [ "$CONFIG_PRODUCT" = "MT7621" ] ; then
 if [ "$CONFIG_FIRMWARE_INCLUDE_XFRM" != "y" ] ; then
 	func_disable_kernel_param "CONFIG_XFRM"
 	func_disable_kernel_param "CONFIG_XFRM_USER"
@@ -421,7 +416,6 @@ if [ "$CONFIG_FIRMWARE_INCLUDE_XFRM" != "y" ] ; then
 	func_disable_kernel_param "CONFIG_CRYPTO_DES"
 	func_disable_kernel_param "CONFIG_CRYPTO_DEFLATE"
 fi
-fi
 ############################ IPSET ####################################
 if [ "$CONFIG_FIRMWARE_INCLUDE_IPSET" != "y" ] ; then
 	func_disable_kernel_param "CONFIG_NETFILTER_NETLINK"
@@ -446,30 +440,30 @@ if [ "$CONFIG_FIRMWARE_INCLUDE_IFB" != "y" ] ; then
 	func_disable_kernel_param "CONFIG_IFB"
 fi
 ############################# NFSC ####################################
-#if [ "$CONFIG_FIRMWARE_INCLUDE_NFSC" != "y" ] ; then
-#	func_disable_kernel_param "CONFIG_FSCACHE"
-#	func_disable_kernel_param "CONFIG_NFS_FS"
-#fi
+if [ "$CONFIG_FIRMWARE_INCLUDE_NFSC" != "y" ] ; then
+	func_disable_kernel_param "CONFIG_FSCACHE"
+	func_disable_kernel_param "CONFIG_NFS_FS"
+fi
 ############################# CIFS ####################################
-# if [ "$CONFIG_FIRMWARE_INCLUDE_CIFS" != "y" ] ; then
-# 	func_disable_kernel_param "CONFIG_CIFS"
-# 	func_disable_busybox_param "CONFIG_FEATURE_MOUNT_CIFS"
-# fi
-# if [ "$CONFIG_FIRMWARE_INCLUDE_SMBD" != "y" ] ; then
-# 	func_disable_kernel_param "CONFIG_NETFILTER_FP_SMB"
-# fi
-# if [ "$CONFIG_FIRMWARE_INCLUDE_NFSD" != "y" -a "$CONFIG_FIRMWARE_INCLUDE_NFSC" != "y" -a "$CONFIG_FIRMWARE_INCLUDE_CIFS" != "y" ] ; then
-# 	func_disable_kernel_param "CONFIG_NETWORK_FILESYSTEMS"
-# 	if [ "$CONFIG_FIRMWARE_ENABLE_USB" != "y" ] || [ -z "$CONFIG_USB_SUPPORT" ] ; then
-# 		func_disable_kernel_param "CONFIG_NLS"
-# 		func_disable_kernel_param "CONFIG_LBDAF"
-# 	fi
-# fi
+if [ "$CONFIG_FIRMWARE_INCLUDE_CIFS" != "y" ] ; then
+	func_disable_kernel_param "CONFIG_CIFS"
+	func_disable_busybox_param "CONFIG_FEATURE_MOUNT_CIFS"
+fi
+if [ "$CONFIG_FIRMWARE_INCLUDE_SMBD" != "y" ] ; then
+	func_disable_kernel_param "CONFIG_NETFILTER_FP_SMB"
+fi
+if [ "$CONFIG_FIRMWARE_INCLUDE_NFSD" != "y" -a "$CONFIG_FIRMWARE_INCLUDE_NFSC" != "y" -a "$CONFIG_FIRMWARE_INCLUDE_CIFS" != "y" ] ; then
+	func_disable_kernel_param "CONFIG_NETWORK_FILESYSTEMS"
+	if [ "$CONFIG_FIRMWARE_ENABLE_USB" != "y" ] || [ -z "$CONFIG_USB_SUPPORT" ] ; then
+		func_disable_kernel_param "CONFIG_NLS"
+		func_disable_kernel_param "CONFIG_LBDAF"
+	fi
+fi
 ############################# USB AUDIO ###############################
-# if [ "$CONFIG_FIRMWARE_INCLUDE_AUDIO" != "y" ] || [ "$CONFIG_FIRMWARE_ENABLE_USB" != "y" ] || [ -z "$CONFIG_USB_SUPPORT" ] ; then
-# 	func_disable_kernel_param "CONFIG_FW_LOADER"
-# 	func_disable_kernel_param "CONFIG_SOUND"
-# fi
+if [ "$CONFIG_FIRMWARE_INCLUDE_AUDIO" != "y" ] || [ "$CONFIG_FIRMWARE_ENABLE_USB" != "y" ] || [ -z "$CONFIG_USB_SUPPORT" ] ; then
+	func_disable_kernel_param "CONFIG_FW_LOADER"
+	func_disable_kernel_param "CONFIG_SOUND"
+fi
 #######################################################################
 if [ "$CONFIG_WITHOUT_KERNEL" != "y" ] ; then
 echo --------------------------MAKE-DEP--------------------------------
