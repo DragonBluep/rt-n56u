@@ -91,8 +91,6 @@ inline void recalc_partitions(uint64_t flash_size, uint32_t kernel_size)
 
 	/* calc "Firmware_Stub" size (allow crossing over "Storage" for <= 8 MB flash) */
 	rt2880_partitions[MTD_FWSTUB_PART_IDX].size = flash_size - MTD_KERNEL_PART_OFFSET;
-	if (flash_size > 0x00800000)
-		rt2880_partitions[MTD_FWSTUB_PART_IDX].size -= rt2880_partitions[MTD_STORE_PART_IDX].size;
 }
 
 #endif
