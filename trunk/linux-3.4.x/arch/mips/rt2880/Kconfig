@@ -113,6 +113,11 @@ config PCIE_PORT2
 config PCIE_PERST_ONLY
 	bool "Use single PERST_N pin (GPIO19) to reset PCIe peripherals"
 	default y
+
+config PCIE_PERST_E8820V2
+	bool "PCIe reset pins (GPIO19 | GPIO22 | GPIO26) configuration for ZTE E8820 V2"
+	depends on !PCIE_PERST_ONLY
+	default n
 endif
 
 #--------------------------
