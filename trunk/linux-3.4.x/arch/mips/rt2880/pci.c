@@ -100,9 +100,11 @@ static int pcie_link_status = 0;
 //#define PCIE_PHY_SSC
 
 #define PCIE_SHARE_PIN_SW		10	// PERST_N GPIO Mode
+#define RGMII2_SHARE_PIN_SW		15	// RGMII2 GPIO Mode
 #if defined (GPIO_PERST)
 #define GPIO_PCIE_PORT0			19	// PERST_N
-#if defined (CONFIG_RALINK_I2S) || defined (CONFIG_RALINK_I2S_MODULE) || defined (CONFIG_PCIE_PERST_ONLY)
+#if defined (CONFIG_RALINK_I2S) || defined (CONFIG_RALINK_I2S_MODULE) || \
+    defined (CONFIG_PCIE_PERST_ONLY) || defined (CONFIG_PCIE_PERST_E8820V2)
 #define UARTL3_SHARE_PIN_SW		PCIE_SHARE_PIN_SW
 #define GPIO_PCIE_PORT1			GPIO_PCIE_PORT0
 #define GPIO_PCIE_PORT2			GPIO_PCIE_PORT0
@@ -624,8 +626,13 @@ int __init init_ralink_pci(void)
 	udelay(100);
 #if defined (GPIO_PERST)
 	val = RALINK_GPIOMODE;
+#if defined (CONFIG_PCIE_PERST_E8820V2)
+	val &= ~((0x3<<PCIE_SHARE_PIN_SW) | (0x1<<RGMII2_SHARE_PIN_SW));
+	val |=  ((0x1<<PCIE_SHARE_PIN_SW) | (0x1<<RGMII2_SHARE_PIN_SW));
+#else
 	val &= ~((0x3<<PCIE_SHARE_PIN_SW) | (0x3<<UARTL3_SHARE_PIN_SW));
 	val |=  ((0x1<<PCIE_SHARE_PIN_SW) | (0x1<<UARTL3_SHARE_PIN_SW));
+#endif
 	RALINK_GPIOMODE = val;
 	val = 0;
 #if defined (CONFIG_PCIE_PORT0)
@@ -636,6 +643,10 @@ int __init init_ralink_pci(void)
 #endif
 #if defined (CONFIG_PCIE_PORT2)
 	val |= (0x1<<GPIO_PCIE_PORT2);
+#endif
+#if defined (CONFIG_PCIE_PERST_E8820V2)
+	/* ZTE E8820 V2 reset pins are #19, #22 and #26 */
+	val |= ((0x1<<22) | (0x1<<26));
 #endif
 	mdelay(50);
 	RALINK_GPIO_CTRL0 |= val;			// switch PERST_N pin to output mode
@@ -689,6 +700,10 @@ int __init init_ralink_pci(void)
 #endif
 #if defined (CONFIG_PCIE_PORT2)
 	val |= (0x1<<GPIO_PCIE_PORT2);
+#endif
+#if defined (CONFIG_PCIE_PERST_E8820V2)
+	/* ZTE E8820 V2 reset pins are #19, #22 and #26 */
+	val |= ((0x1<<22) | (0x1<<26));
 #endif
 	RALINK_GPIO_DSET0 = val;			// rise PERST_N pin (complete reset peripherals)
 #else /* !defined (GPIO_PERST) */
