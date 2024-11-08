@@ -60,6 +60,11 @@ config RALINK_GPIOMODE_I2C
 	bool "Configure I2C as GPIO mode"
 	depends on RALINK_GPIO
 	default n
+config RALINK_GPIOMODE_WLED
+	bool "Configure WLAN LED pin as GPIO mode"
+	depends on RALINK_GPIO
+	depends on RALINK_MT7620 || RALINK_MT7628
+	default n
 config RALINK_GPIOMODE_ANTSEL
 	bool "Configure I2S and UART2 as PA/LNA mode"
 	depends on RALINK_GPIO

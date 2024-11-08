@@ -1514,9 +1514,22 @@ int __init ralink_gpio_init(void)
 	//config these pins to gpio mode
 	gpiomode = le32_to_cpu(*(volatile u32 *)(RALINK_REG_GPIOMODE));
 	gpiomode &= ~(RALINK_GPIOMODE_DFT);		// clear bit[2:4] UARTF_SHARE_MODE
-#if defined (CONFIG_RALINK_MT7620) || defined (CONFIG_RALINK_MT7628)
-	gpiomode &= ~(RALINK_GPIOMODE_WLED);		// clear bit[13] WLAN_LED
+
+#if defined (CONFIG_RALINK_MT7620)
+#if defined (CONFIG_RALINK_GPIOMODE_WLED)
+	gpiomode |= RALINK_GPIOMODE_WLED;
+#else
+	gpiomode &= ~(RALINK_GPIOMODE_WLED);
 #endif
+#endif
+#if defined (CONFIG_RALINK_MT7628)
+#if defined (CONFIG_RALINK_GPIOMODE_WLED)
+	ralink_gpio_mode_set_bit(32, 1);
+#else
+	ralink_gpio_mode_set_bit(32, 0);
+#endif
+#endif
+
 #if defined (CONFIG_RALINK_MT7620)
 	gpiomode &= ~(RALINK_GPIOMODE_SPI_REFCLK);	// clear bit[12] SPI_REFCLK0_MODE
 #endif
