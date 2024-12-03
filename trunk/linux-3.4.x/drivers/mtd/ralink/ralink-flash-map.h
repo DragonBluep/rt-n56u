@@ -26,7 +26,11 @@
 
 #if defined (CONFIG_RT2880_ROOTFS_IN_FLASH)
 #define MTD_STORE_PART_IDX		5
+#if defined (CONFIG_RT2880_HIWIFI_FLASH_LAYOUT)
+#define MTD_FWSTUB_PART_IDX		9
+#else
 #define MTD_FWSTUB_PART_IDX		6
+#endif
 #else
 #define MTD_STORE_PART_IDX		4
 #define MTD_FWSTUB_PART_IDX		5
@@ -60,6 +64,20 @@ static struct mtd_partition rt2880_partitions[] = {
 		name:   "Storage",		/* mtdblock5 */
 		size:   MTD_STORE_PART_SIZE,	/* 64K */
 		offset: MTDPART_OFS_APPEND,
+#if defined (CONFIG_RT2880_HIWIFI_FLASH_LAYOUT)
+	}, {
+		name:   "Oem",
+		size:   0x00020000,		/* 128k */
+		offset: MTDPART_OFS_APPEND,
+	}, {
+		name:   "Bdinfo",
+		size:   0x00010000,		/* 64K */
+		offset: MTDPART_OFS_APPEND,
+	}, {
+		name:   "Backup",
+		size:   0x00010000,		/* 64k */
+		offset: MTDPART_OFS_APPEND,
+#endif
 	}, {
 		name:   "Firmware_Stub",	/* mtdblock6 */
 		size:   0,			/* calc */
@@ -84,6 +102,10 @@ inline void recalc_partitions(uint64_t flash_size, uint32_t kernel_size)
 #endif
 	/* calc "RootFS" size */
 	rt2880_partitions[4].size = flash_size - (MTD_KERNEL_PART_OFFSET + rt2880_partitions[MTD_STORE_PART_IDX].size + rt2880_partitions[3].size);
+#if defined (CONFIG_RT2880_HIWIFI_FLASH_LAYOUT)
+	/* oem + bdinfo + backup  = 0x00040000 256K */
+	rt2880_partitions[4].size -= 0x00040000;
+#endif
 #else
 	/* ROOTFS_IN_RAM */
 	rt2880_partitions[3].size = flash_size - (MTD_KERNEL_PART_OFFSET + rt2880_partitions[MTD_STORE_PART_IDX].size);
@@ -91,6 +113,9 @@ inline void recalc_partitions(uint64_t flash_size, uint32_t kernel_size)
 
 	/* calc "Firmware_Stub" size (allow crossing over "Storage" for <= 8 MB flash) */
 	rt2880_partitions[MTD_FWSTUB_PART_IDX].size = flash_size - MTD_KERNEL_PART_OFFSET;
+#if defined (CONFIG_RT2880_HIWIFI_FLASH_LAYOUT)
+	rt2880_partitions[MTD_FWSTUB_PART_IDX].size -= 0x00040000;
+#endif
 }
 
 #endif

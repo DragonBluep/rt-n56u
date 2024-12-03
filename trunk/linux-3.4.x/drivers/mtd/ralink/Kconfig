@@ -106,6 +106,11 @@ config ROOTFS_IN_FLASH_NO_PADDING
 	default y
 	depends on RT2880_ROOTFS_IN_FLASH && !MTD_NAND_USE_UBI_PART
 
+config RT2880_HIWIFI_FLASH_LAYOUT
+	bool "HiWiFi series router partition layout"
+	default n
+	depends on RT2880_ROOTFS_IN_FLASH && !MTD_NAND_USE_UBI_PART
+
 config MTD_NAND_USE_UBI_PART
 	bool "Use UBI partitions (U-Boot must support boot from UBI!)"
 	default n
