@@ -307,6 +307,12 @@ init_gpio_leds_buttons(void)
 	cpu_gpio_set_pin(BOARD_GPIO_PWR_USB2, BOARD_GPIO_PWR_USB_ON);
 #endif
 
+	/* enable MMC power */
+#if defined (BOARD_GPIO_PWR_MMC)
+	cpu_gpio_set_pin_direction(BOARD_GPIO_PWR_MMC, 1);
+	cpu_gpio_set_pin(BOARD_GPIO_PWR_MMC, BOARD_GPIO_PWR_MMC_ON);
+#endif
+
 	/* init BTN Reset  */
 #if defined (BOARD_GPIO_BTN_RESET)
 	cpu_gpio_set_pin_direction(BOARD_GPIO_BTN_RESET, 0);
