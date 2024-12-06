@@ -291,6 +291,11 @@ init_gpio_leds_buttons(void)
 	cpu_gpio_set_pin_direction(BOARD_GPIO_LED_POWER, 1);
 	LED_CONTROL(BOARD_GPIO_LED_POWER, LED_ON);
 #endif
+	/* turn off power LED1 */
+#if defined (BOARD_GPIO_LED_POWER1)
+	cpu_gpio_set_pin_direction(BOARD_GPIO_LED_POWER1, 1);
+	LED_CONTROL(BOARD_GPIO_LED_POWER1, LED_OFF);
+#endif
 
 	/* enable USB port 5V power */
 #if defined (BOARD_GPIO_PWR_USB)
