@@ -2579,7 +2579,7 @@ VOID RXIQ_Calibration(
 	}
 	
 	bbpval = BBP4 & (~0x18);
-	bbpval = BBP4 | 0x00;
+	bbpval = bbpval | 0x00;
 	RTMP_BBP_IO_WRITE8_BY_REG_ID(pAd, BBP_R4, bbpval);
 
 	RTMP_BBP_IO_READ8_BY_REG_ID(pAd, BBP_R21, &bbpval);
@@ -2692,13 +2692,13 @@ VOID RXIQ_Calibration(
 		{ /* only on Tx0 */	
 			/* RF only Tx0 */
 			rfval = RFB0R1 & (~0x3);
-			rfval = RFB0R1 | 0x1;
+			rfval = rfval | 0x1;
 			RT635xWriteRFRegister(pAd, RF_BANK0, RF_R01, rfval);
 			rfval = RFB0R2 & (~0x33);
-			rfval = RFB0R2 | 0x11;
+			rfval = rfval | 0x11;
 			RT635xWriteRFRegister(pAd, RF_BANK0, RF_R02, rfval);
 			rfval = RFB0R42 & (~0x50);
-			rfval = RFB0R42 | 0x10;
+			rfval = rfval | 0x10;
 			RT635xWriteRFRegister(pAd, RF_BANK0, RF_R42, rfval);
 
 			RTMP_IO_WRITE32(pAd, RF_CONTROL0, 0x00001006); // 0x0518
@@ -2717,13 +2717,13 @@ VOID RXIQ_Calibration(
 		{
 			// RF only Tx1
 			rfval = RFB0R1 & (~0x3);
-			rfval = RFB0R1 | 0x2;
+			rfval = rfval | 0x2;
 			RT635xWriteRFRegister(pAd, RF_BANK0, RF_R01, rfval);
 			rfval = RFB0R2 & (~0x33);
-			rfval = RFB0R2 | 0x22;
+			rfval = rfval | 0x22;
 			RT635xWriteRFRegister(pAd, RF_BANK0, RF_R02, rfval);
 			rfval = RFB0R42 & (~0x50);
-			rfval = RFB0R42 | 0x40;
+			rfval = rfval | 0x40;
 			RT635xWriteRFRegister(pAd, RF_BANK0, RF_R42, rfval);
 
 			RTMP_IO_WRITE32(pAd, RF_CONTROL0, 0x00002006); // 0x0518
