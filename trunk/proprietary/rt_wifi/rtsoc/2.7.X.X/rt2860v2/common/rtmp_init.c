@@ -1930,6 +1930,20 @@ NDIS_STATUS	NICInitializeAsic(
 #endif /* CONFIG_STA_SUPPORT */
 #endif /* RTMP_MAC_PCI */
 
+#ifdef RT6352
+	if (IS_RT6352(pAd))
+	{
+		US_CYC_CNT_STRUC USCycCnt;
+		UINT32 Value;
+
+		RTMP_IO_READ32(pAd, US_CYC_CNT, &Value);
+		USCycCnt.word = Value;
+		/* For CPU Freq = 580 MHz, BUS CLK = 580 / 3 */
+		USCycCnt.field.UsCycCnt = 0xC1;
+		RTMP_IO_WRITE32(pAd, US_CYC_CNT, USCycCnt.word);
+	}
+#endif /* RT6352 */
+
 #ifdef RTMP_PCI_SUPPORT
 	pAd->CommonCfg.bPCIeBus = FALSE; /* PCI bus*/
 

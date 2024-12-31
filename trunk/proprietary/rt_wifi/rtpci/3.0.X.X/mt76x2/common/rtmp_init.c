@@ -1451,6 +1451,19 @@ NDIS_STATUS	NICInitializeAsic(RTMP_ADAPTER *pAd, BOOLEAN bHardReset)
 	RTMP_IO_WRITE32(pAd, MAC_SYS_CTRL, 0x0);
 #endif /* RTMP_MAC_PCI */
 
+#ifdef RT6352
+	if (IS_RT6352(pAd))
+	{
+		US_CYC_CNT_STRUC USCycCnt;
+
+		RTMP_IO_READ32(pAd, US_CYC_CNT, &mac_val);
+		USCycCnt.word = mac_val;
+		/* For CPU Freq = 580 MHz, BUS CLK = 580 / 3 */
+		USCycCnt.field.UsCycCnt = 0xC1;
+		RTMP_IO_WRITE32(pAd, US_CYC_CNT, USCycCnt.word);
+	}
+#endif /* RT6352 */
+
 #ifdef RTMP_PCI_SUPPORT
 	pAd->CommonCfg.bPCIeBus = FALSE; /* PCI bus*/
 #ifdef RTMP_MAC
