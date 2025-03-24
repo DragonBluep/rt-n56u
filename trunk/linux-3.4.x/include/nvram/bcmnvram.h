@@ -30,7 +30,11 @@
 #define NVRAM_MTD_OFFSET	0		/* uboot env not shared with nvram */
 #else
 #define NVRAM_MTD_SIZE		0x10000		/* mtdblock1, 64K */
+#if defined (CONFIG_RT2880_SEPARATED_CONFIG)
+#define NVRAM_MTD_OFFSET	0x00000
+#else
 #define NVRAM_MTD_OFFSET	0x01000		/* uboot env max space 4K, shared with nvram */
+#endif /* CONFIG_RT2880_SEPARATED_CONFIG */
 #endif
 
 #define NVRAM_SPACE		(NVRAM_MTD_SIZE-NVRAM_MTD_OFFSET)

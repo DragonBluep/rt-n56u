@@ -27,9 +27,17 @@
 #if defined (CONFIG_RT2880_ROOTFS_IN_FLASH)
 #define MTD_STORE_PART_IDX		5
 #if defined (CONFIG_RT2880_HIWIFI_FLASH_LAYOUT)
+#if defined (CONFIG_RT2880_SEPARATED_CONFIG)
+#define MTD_FWSTUB_PART_IDX		10
+#else
 #define MTD_FWSTUB_PART_IDX		9
+#endif /* CONFIG_RT2880_SEPARATED_CONFIG */
+#else
+#if defined (CONFIG_RT2880_SEPARATED_CONFIG)
+#define MTD_FWSTUB_PART_IDX		7
 #else
 #define MTD_FWSTUB_PART_IDX		6
+#endif /* CONFIG_RT2880_SEPARATED_CONFIG */
 #endif
 #else
 #define MTD_STORE_PART_IDX		4
@@ -43,7 +51,11 @@ static struct mtd_partition rt2880_partitions[] = {
 		size:   MTD_BOOT_PART_SIZE,	/* 192K */
 		offset: 0,
 	}, {
+#if defined (CONFIG_RT2880_SEPARATED_CONFIG)
+		name:   "Environment",		/* mtdblock1 */
+#else
 		name:   "Config",		/* mtdblock1 */
+#endif
 		size:   MTD_CONFIG_PART_SIZE,	/* 64K */
 		offset: MTDPART_OFS_APPEND,
 	}, {
@@ -64,6 +76,12 @@ static struct mtd_partition rt2880_partitions[] = {
 		name:   "Storage",		/* mtdblock5 */
 		size:   MTD_STORE_PART_SIZE,	/* 64K */
 		offset: MTDPART_OFS_APPEND,
+#if defined (CONFIG_RT2880_SEPARATED_CONFIG)
+	}, {
+		name:   "Config",
+		size:   MTD_CONFIG_PART_SIZE,	/* 64k */
+		offset: MTDPART_OFS_APPEND,
+#endif
 #if defined (CONFIG_RT2880_HIWIFI_FLASH_LAYOUT)
 	}, {
 		name:   "Oem",
@@ -102,6 +120,9 @@ inline void recalc_partitions(uint64_t flash_size, uint32_t kernel_size)
 #endif
 	/* calc "RootFS" size */
 	rt2880_partitions[4].size = flash_size - (MTD_KERNEL_PART_OFFSET + rt2880_partitions[MTD_STORE_PART_IDX].size + rt2880_partitions[3].size);
+#if defined (CONFIG_RT2880_SEPARATED_CONFIG)
+	rt2880_partitions[4].size -= 0x00010000;
+#endif
 #if defined (CONFIG_RT2880_HIWIFI_FLASH_LAYOUT)
 	/* oem + bdinfo + backup  = 0x00040000 256K */
 	rt2880_partitions[4].size -= 0x00040000;
@@ -113,6 +134,9 @@ inline void recalc_partitions(uint64_t flash_size, uint32_t kernel_size)
 
 	/* calc "Firmware_Stub" size (allow crossing over "Storage" for <= 8 MB flash) */
 	rt2880_partitions[MTD_FWSTUB_PART_IDX].size = flash_size - MTD_KERNEL_PART_OFFSET;
+#if defined (CONFIG_RT2880_SEPARATED_CONFIG)
+	rt2880_partitions[MTD_FWSTUB_PART_IDX].size -= 0x00010000;
+#endif
 #if defined (CONFIG_RT2880_HIWIFI_FLASH_LAYOUT)
 	rt2880_partitions[MTD_FWSTUB_PART_IDX].size -= 0x00040000;
 #endif
