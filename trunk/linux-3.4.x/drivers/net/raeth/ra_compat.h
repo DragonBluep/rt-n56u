@@ -71,6 +71,9 @@ typedef u32 netdev_features_t;
 #if defined (CONFIG_RALINK_MT7621)
 #define MTD_GMAC0_OFFSET	0xE000
 #define MTD_GMAC2_OFFSET	0xE006
+#elif defined (CONFIG_RALINK_MT7620) || defined (CONFIG_RALINK_MT7628)
+#define MTD_GMAC0_OFFSET	0x28
+#define MTD_GMAC2_OFFSET	0x2e
 #else
 #define MTD_GMAC0_OFFSET	0x28
 #define MTD_GMAC2_OFFSET	0x22
