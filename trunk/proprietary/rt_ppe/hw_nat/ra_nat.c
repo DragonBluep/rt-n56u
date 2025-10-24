@@ -433,7 +433,7 @@ static uint32_t PpeExtIfPingPongHandler(struct sk_buff * skb)
 
 	dev = DstPort[VirIfIdx];
 	if (!dev) {
-		NAT_PRINT("HNAT: %s, reentry packet interface (VirIfIdx=%d) not exist!\n", __FUNCTION__, VirIfIdx);
+		NAT_DEBUG("HNAT: %s, reentry packet interface (VirIfIdx=%d) not exist!\n", __FUNCTION__, VirIfIdx);
 		return 1;
 	}
 
